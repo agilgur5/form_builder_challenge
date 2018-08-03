@@ -1,4 +1,4 @@
-var commonEntry = ['./publicPath.es6', './polyfills.es6']
+var commonEntry = ['./polyfills.es6']
 // webpack's configuration
 module.exports = {
   entry: {
@@ -34,11 +34,6 @@ module.exports = {
       {
         test: /\.cssm$/,
         loader: 'style-loader!css-loader?modules'
-      },
-      // inline base64 URLs for <=8k images, direct URLs for the rest
-      {
-        test: /\.(png|jpg|svg|gif)$/,
-        loader: 'url-loader?limit=8192'
       }
     ]
   },
