@@ -50,7 +50,7 @@ class App extends React.Component {
 
 class InputComponent extends React.Component {
   render = () => {
-    let {input, deleteSelf, changeSelf} = this.props
+    let {input, deleteSelf} = this.props
     let {condition, question, type, subInputs} = input
 
     return <div>
@@ -60,10 +60,45 @@ class InputComponent extends React.Component {
       <div>Question: <input type='text' value={question} /></div>
       <div>Type: <input type='radio' value={type} /></div>
       <button onClick={deleteSelf}>Delete</button>
-      {/* TODO: complete below */}
-      <button onClick={this._addInput}>Add Sub-Input</button>
-      {subInputs.map((subInput) => <InputComponent input={subInput} />)}
+      <button onClick={this._addSubInput}>Add Sub-Input</button>
+      {subInputs.map((subInput, index) =>
+        <InputComponent input={subInput}
+          deleteSelf={() => this._deleteSubInput(index)}
+          changeSelf={(k, v) => this._changeSubInput(index, k, v)} />
+      )}
     </div>
+  }
+
+  _addSubInput = () => {
+    let subInputs = this.props.input.subInputs
+    this.props.changeSelf('subInputs', subInputs.concat({
+      condition: 'eq',
+      question: '',
+      type: 'text',
+      subInputs: []
+    }))
+  }
+  _changeSubInput = (index, key, value) => {
+    let subInputs = this.props.input.subInputs
+    this.props.changeSelf('subInputs', subInputs.map((input, index2) => {
+      // no changes
+      if (index !== index2) {
+        return input
+      }
+      // found our input
+      let change = {[key]: value}
+      return {
+        ...input,
+        ...change
+      }
+    }))
+  }
+  _deleteSubInput = (index) => {
+    let subInputs = this.props.input.subInputs
+    this.props.changeSelf('subInputs', [
+      ...subInputs.slice(0, index),
+      ...subInputs.slice(index + 1)
+    ])
   }
 }
 
