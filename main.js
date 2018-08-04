@@ -1,6 +1,8 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 
+import { addInput, changeInput, deleteInput } from './actions.js'
+
 import styles from './main.cssm'
 
 class App extends React.Component {
@@ -13,40 +15,23 @@ class App extends React.Component {
     return <div>
       {inputs.map((input, index) =>
         <InputComponent input={input}
-          deleteSelf={() => this._deleteInput(index)}
-          changeSelf={(k, v) => this._changeInput(index, k, v)} />
+          deleteSelf={this._deleteInput(index)}
+          changeSelf={this._changeInput(index)} />
       )}
       <button onClick={this._addInput}>Add Input</button>
     </div>
   }
 
-  // TODO: use immer or a better state mechanism
   _addInput = () => {
-    this.setState((state) => ({inputs: state.inputs.concat({
-      question: '',
-      type: 'text',
-      subInputs: []
-    })}))
+    this.setState((state) => ({inputs: addInput(state.inputs, false)}))
   }
-  _changeInput = (index, key, value) => {
-    this.setState((state) => ({inputs: state.inputs.map((input, index2) => {
-      // no changes
-      if (index !== index2) {
-        return input
-      }
-      // found our input
-      let change = {[key]: value}
-      return {
-        ...input,
-        ...change
-      }
-    })}))
+  _changeInput = (index) => (key, value) => {
+    this.setState((state) => ({inputs:
+      changeInput(state.inputs, index, key, value)
+    }))
   }
-  _deleteInput = (index) => {
-    this.setState((state) => ({inputs: [
-      ...state.inputs.slice(0, index),
-      ...state.inputs.slice(index + 1)
-    ]}))
+  _deleteInput = (index) => () => {
+    this.setState((state) => ({inputs: deleteInput(state.inputs, index)}))
   }
 }
 
@@ -65,42 +50,26 @@ class InputComponent extends React.Component {
       <button onClick={this._addSubInput}>Add Sub-Input</button>
       {subInputs.map((subInput, index) =>
         <InputComponent input={subInput}
-          deleteSelf={() => this._deleteSubInput(index)}
-          changeSelf={(k, v) => this._changeSubInput(index, k, v)} />
+          deleteSelf={this._deleteSubInput(index)}
+          changeSelf={this._changeSubInput(index)} />
       )}
     </div>
   }
 
   _addSubInput = () => {
     let subInputs = this.props.input.subInputs
-    this.props.changeSelf('subInputs', subInputs.concat({
-      condition: 'eq',
-      question: '',
-      type: 'text',
-      subInputs: []
-    }))
+    this.props.changeSelf('subInputs', addInput(subInputs))
   }
-  _changeSubInput = (index, key, value) => {
+  _changeSubInput = (index) => (key, value) => {
     let subInputs = this.props.input.subInputs
-    this.props.changeSelf('subInputs', subInputs.map((input, index2) => {
-      // no changes
-      if (index !== index2) {
-        return input
-      }
-      // found our input
-      let change = {[key]: value}
-      return {
-        ...input,
-        ...change
-      }
-    }))
+    this.props.changeSelf(
+      'subInputs',
+      changeInput(subInputs, index, key, value)
+    )
   }
-  _deleteSubInput = (index) => {
+  _deleteSubInput = (index) => () => {
     let subInputs = this.props.input.subInputs
-    this.props.changeSelf('subInputs', [
-      ...subInputs.slice(0, index),
-      ...subInputs.slice(index + 1)
-    ])
+    this.props.changeSelf('subInputs', deleteInput(subInputs, index))
   }
 }
 
