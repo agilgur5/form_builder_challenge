@@ -126,11 +126,13 @@ class InputComponent extends React.Component {
         </Form>
       </Well>
 
-      {subInputs.map((subInput, index) =>
-        <InputComponent key={subInput.id} input={subInput} parentType={type}
-          deleteSelf={this._deleteSubInput(index)}
-          changeSelf={this._changeSubInput(index)} />
-      )}
+      <div className={subInputs.length > 0 ? styles.subInputList : null}>
+        {subInputs.map((subInput, index) =>
+          <InputComponent key={subInput.id} input={subInput} parentType={type}
+            deleteSelf={this._deleteSubInput(index)}
+            changeSelf={this._changeSubInput(index)} />
+        )}
+      </div>
     </div>
   }
 
