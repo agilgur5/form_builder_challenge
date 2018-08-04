@@ -5,19 +5,3 @@
 .tab {
   margin-top: 20px;
 }
-
-.subInput {
-  width: 82vw; /* barely fits both buttons on 320px screens */
-  max-width: 400px;
-}
-
-.subInputList {
-  /* should be .subInput:has(> .subInput), but no browser implements :has :( */
-  border-left: 1px dashed #ddd; /* faintly show left indent / margin */
-  /* only indent when nested */
-  padding-left: 30px;
-}
-
-.addSubInput {
-  float: right;
-}
