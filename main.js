@@ -14,7 +14,7 @@ class App extends React.Component {
     let {inputs} = this.state
     return <div>
       {inputs.map((input, index) =>
-        <InputComponent input={input}
+        <InputComponent key={input.id} input={input}
           deleteSelf={this._deleteInput(index)}
           changeSelf={this._changeInput(index)} />
       )}
@@ -49,7 +49,7 @@ class InputComponent extends React.Component {
       <button onClick={deleteSelf}>Delete</button>
       <button onClick={this._addSubInput}>Add Sub-Input</button>
       {subInputs.map((subInput, index) =>
-        <InputComponent input={subInput}
+        <InputComponent key={subInput.id} input={subInput}
           deleteSelf={this._deleteSubInput(index)}
           changeSelf={this._changeSubInput(index)} />
       )}

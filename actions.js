@@ -1,7 +1,10 @@
+import shortid from 'shortid'
+
 // TODO: use immer or a better state mechanism
 
 export function addInput (inputs, isSubInput = true) {
   let newInput = {
+    id: shortid.generate(),
     question: '',
     type: 'text',
     subInputs: []
