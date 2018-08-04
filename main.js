@@ -29,7 +29,7 @@ class App extends React.Component {
         </Tab>
         <Tab eventKey={2} title='Preview' className={styles.tab} />
         <Tab eventKey={3} title='Export' className={styles.tab} >
-          <FormControl componentClass='textarea' readOnly
+          <FormControl componentClass='textarea' readOnly rows='10'
             value={JSON.stringify({inputs})} />
         </Tab>
       </Tabs>
