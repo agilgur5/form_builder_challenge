@@ -37,7 +37,7 @@ class App extends React.Component {
   }
 
   _addInput = () => {
-    this.setState((state) => ({inputs: addInput(state.inputs, false)}))
+    this.setState((state) => ({inputs: addInput(state.inputs)}))
   }
   _changeInput = (index) => (key, value) => {
     this.setState((state) => ({inputs:
@@ -136,8 +136,9 @@ class InputComponent extends React.Component {
 
   // subInput changes
   _addSubInput = () => {
-    let subInputs = this.props.input.subInputs
-    this.props.changeSelf('subInputs', addInput(subInputs))
+    let {type, subInputs} = this.props.input
+    // parentType of subInput is the current type
+    this.props.changeSelf('subInputs', addInput(subInputs, type))
   }
   _changeSubInput = (index) => (key, value) => {
     let subInputs = this.props.input.subInputs
@@ -162,22 +163,10 @@ class InputComponent extends React.Component {
   }
   _changeCondCond = (ev) => {
     let cond = ev.target.value // store outside of synthetic ev
-    // early return if condition didn't change
-    if (cond === this.props.input.condition.cond) { return }
-
-    let value = 0
-    switch (cond) {
-      case 'text':
-        value = ''
-        break
-      case 'number':
-        value = 0
-        break
-      case 'yes-no':
-        value = 'yes'
-        break
-    }
-    this.props.changeSelf('condition', {cond, value})
+    this.props.changeSelf('condition', {
+      ...this.props.input.condition,
+      cond
+    })
   }
   _changeCondValue = (ev) => {
     let value = ev.target.value // store outside of synthetic ev

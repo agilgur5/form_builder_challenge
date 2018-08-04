@@ -2,17 +2,28 @@ import shortid from 'shortid'
 
 // TODO: use immer or a better state mechanism
 
-export function addInput (inputs, isSubInput = true) {
+function defaultCondValue (parentType) {
+  switch (parentType) {
+    case 'text':
+      return ''
+    case 'number':
+      return '0'
+    case 'yes-no':
+      return 'yes'
+  }
+}
+
+export function addInput (inputs, parentType = null) {
   let newInput = {
     id: shortid.generate(),
     question: '',
     type: 'text',
     subInputs: []
   }
-  if (isSubInput) {
+  if (parentType) {
     newInput.condition = {
       cond: 'eq',
-      value: ''
+      value: defaultCondValue(parentType)
     }
   }
   return inputs.concat(newInput)
