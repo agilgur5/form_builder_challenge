@@ -60,11 +60,21 @@ class InputComponent extends React.Component {
             : null}
           <FormGroup>
             <Col sm={2} componentClass={ControlLabel}>Question</Col>
-            <Col sm={10}><FormControl type='text' value={question} /></Col>
+            <Col sm={10}>
+              <FormControl type='text' value={question}
+                onChange={this._changeQuestion} />
+            </Col>
           </FormGroup>
           <FormGroup>
             <Col sm={2} componentClass={ControlLabel}>Type</Col>
-            <Col sm={10}><FormControl type='radio' value={type} /></Col>
+            <Col sm={10}>
+              <FormControl componentClass='select' value={type}
+                onChange={this._changeType}>
+                <option value='text'>Text</option>
+                <option value='number'>Number</option>
+                <option value='yes-no'>Yes / No</option>
+              </FormControl>
+            </Col>
           </FormGroup>
           <Button onClick={deleteSelf}>
             <Glyphicon glyph='minus' /> Delete
@@ -83,6 +93,7 @@ class InputComponent extends React.Component {
     </div>
   }
 
+  // subInput changes
   _addSubInput = () => {
     let subInputs = this.props.input.subInputs
     this.props.changeSelf('subInputs', addInput(subInputs))
@@ -97,6 +108,16 @@ class InputComponent extends React.Component {
   _deleteSubInput = (index) => () => {
     let subInputs = this.props.input.subInputs
     this.props.changeSelf('subInputs', deleteInput(subInputs, index))
+  }
+
+  // self changes
+  _changeQuestion = (ev) => {
+    let val = ev.target.value // store outside of synthetic ev
+    this.props.changeSelf('question', val)
+  }
+  _changeType = (ev) => {
+    let val = ev.target.value // store outside of synthetic ev
+    this.props.changeSelf('type', val)
   }
 }
 
