@@ -41,22 +41,52 @@ class App extends React.Component {
 }
 
 class InputComponent extends React.Component {
-  renderCondition = (condition) => {
+  renderConditionValue = (condition, parentType) => {
+    switch (parentType) {
+      case 'text':
+        return <FormControl type='text' value={condition.value}
+          onChange={this._changeCondValue} />
+      case 'number':
+        return <FormControl type='number' value={condition.value}
+          onChange={this._changeCondValue} />
+      case 'yes-no':
+        return <FormControl componentClass='select' value={condition.value}
+          onChange={this._changeCondValue}>
+          <option value='yes'>Yes</option>
+          <option value='no'>No</option>
+        </FormControl>
+    }
+  }
+  renderCondition = (condition, parentType) => {
     return <FormGroup>
       <Col sm={2} componentClass={ControlLabel}>Condition</Col>
-      <Col sm={10}><FormControl type='radio' value={condition} /></Col>
+      <Col sm={6}>
+        <FormControl componentClass='select' value={condition.cond}
+          onChange={this._changeCondCond}>
+          <option value='eq'>Equals</option>
+          {parentType === 'number'
+            ? <React.Fragment>
+              <option value='geq'>Greater than</option>
+              <option value='leq'>Less than</option>
+            </React.Fragment>
+            : null}
+        </FormControl>
+      </Col>
+      <Col sm={4}>
+        {this.renderConditionValue(condition, parentType)}
+      </Col>
     </FormGroup>
   }
 
   render = () => {
-    let {input, deleteSelf} = this.props
+    let {input, parentType, deleteSelf} = this.props
     let {condition, question, type, subInputs} = input
 
     return <div className={styles.subInput}>
       <Well>
         <Form horizontal>
           {condition
-            ? this.renderCondition(condition)
+            ? this.renderCondition(condition, parentType)
             : null}
           <FormGroup>
             <Col sm={2} componentClass={ControlLabel}>Question</Col>
@@ -76,6 +106,7 @@ class InputComponent extends React.Component {
               </FormControl>
             </Col>
           </FormGroup>
+
           <Button onClick={deleteSelf}>
             <Glyphicon glyph='minus' /> Delete
           </Button>
@@ -85,8 +116,9 @@ class InputComponent extends React.Component {
           </Button>
         </Form>
       </Well>
+
       {subInputs.map((subInput, index) =>
-        <InputComponent key={subInput.id} input={subInput}
+        <InputComponent key={subInput.id} input={subInput} parentType={type}
           deleteSelf={this._deleteSubInput(index)}
           changeSelf={this._changeSubInput(index)} />
       )}
@@ -118,6 +150,32 @@ class InputComponent extends React.Component {
   _changeType = (ev) => {
     let val = ev.target.value // store outside of synthetic ev
     this.props.changeSelf('type', val)
+  }
+  _changeCondCond = (ev) => {
+    let cond = ev.target.value // store outside of synthetic ev
+    // early return if condition didn't change
+    if (cond === this.props.input.condition.cond) { return }
+
+    let value = 0
+    switch (cond) {
+      case 'text':
+        value = ''
+        break
+      case 'number':
+        value = 0
+        break
+      case 'yes-no':
+        value = 'yes'
+        break
+    }
+    this.props.changeSelf('condition', {cond, value})
+  }
+  _changeCondValue = (ev) => {
+    let value = ev.target.value // store outside of synthetic ev
+    this.props.changeSelf('condition', {
+      ...this.props.input.condition,
+      value
+    })
   }
 }
 

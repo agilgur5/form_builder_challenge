@@ -10,7 +10,10 @@ export function addInput (inputs, isSubInput = true) {
     subInputs: []
   }
   if (isSubInput) {
-    newInput.condition = 'eq'
+    newInput.condition = {
+      cond: 'eq',
+      value: ''
+    }
   }
   return inputs.concat(newInput)
 }
