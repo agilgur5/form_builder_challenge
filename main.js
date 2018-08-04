@@ -1,8 +1,11 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
+import { Button, Glyphicon, Well, Form, FormGroup, ControlLabel,
+  FormControl, Col } from 'react-bootstrap'
 
 import { addInput, changeInput, deleteInput } from './actions.js'
 
+import 'bootstrap-css-only'
 import styles from './main.cssm'
 
 class App extends React.Component {
@@ -12,13 +15,15 @@ class App extends React.Component {
 
   render = () => {
     let {inputs} = this.state
-    return <div>
+    return <div className={styles.root}>
       {inputs.map((input, index) =>
         <InputComponent key={input.id} input={input}
           deleteSelf={this._deleteInput(index)}
           changeSelf={this._changeInput(index)} />
       )}
-      <button onClick={this._addInput}>Add Input</button>
+      <Button bsStyle='success' onClick={this._addInput}>
+        <Glyphicon glyph='plus' /> Add Input
+      </Button>
     </div>
   }
 
@@ -36,18 +41,40 @@ class App extends React.Component {
 }
 
 class InputComponent extends React.Component {
+  renderCondition = (condition) => {
+    return <FormGroup>
+      <Col sm={2} componentClass={ControlLabel}>Condition</Col>
+      <Col sm={10}><FormControl type='radio' value={condition} /></Col>
+    </FormGroup>
+  }
+
   render = () => {
     let {input, deleteSelf} = this.props
     let {condition, question, type, subInputs} = input
 
     return <div className={styles.subInput}>
-      {condition
-        ? <div>Condition: <input type='radio' value={condition} /></div>
-        : null}
-      <div>Question: <input type='text' value={question} /></div>
-      <div>Type: <input type='radio' value={type} /></div>
-      <button onClick={deleteSelf}>Delete</button>
-      <button onClick={this._addSubInput}>Add Sub-Input</button>
+      <Well>
+        <Form horizontal>
+          {condition
+            ? this.renderCondition(condition)
+            : null}
+          <FormGroup>
+            <Col sm={2} componentClass={ControlLabel}>Question</Col>
+            <Col sm={10}><FormControl type='text' value={question} /></Col>
+          </FormGroup>
+          <FormGroup>
+            <Col sm={2} componentClass={ControlLabel}>Type</Col>
+            <Col sm={10}><FormControl type='radio' value={type} /></Col>
+          </FormGroup>
+          <Button onClick={deleteSelf}>
+            <Glyphicon glyph='minus' /> Delete
+          </Button>
+          <Button className={styles.addSubInput} bsStyle='success'
+            onClick={this._addSubInput}>
+            <Glyphicon glyph='plus' /> Add Sub-Input
+          </Button>
+        </Form>
+      </Well>
       {subInputs.map((subInput, index) =>
         <InputComponent key={subInput.id} input={subInput}
           deleteSelf={this._deleteSubInput(index)}

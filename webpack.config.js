@@ -35,6 +35,15 @@ module.exports = {
       {
         test: /\.cssm$/,
         loader: 'style-loader!css-loader?modules'
+      },
+      {
+        test: /\.(ttf|eot|woff|woff2|svg)$/,
+        loader: 'file-loader',
+        options: {
+          name: '[name].[ext]',
+          outputPath: 'fonts/',
+          publicPath: './build/fonts/'
+        }
       }
     ]
   },
