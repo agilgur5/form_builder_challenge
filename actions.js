@@ -13,6 +13,13 @@ function defaultCondValue (parentType) {
   }
 }
 
+function newCondition (parentType) {
+  return {
+    cond: 'eq',
+    value: defaultCondValue(parentType)
+  }
+}
+
 export function addInput (inputs, parentType = null) {
   let newInput = {
     id: shortid.generate(),
@@ -21,24 +28,33 @@ export function addInput (inputs, parentType = null) {
     subInputs: []
   }
   if (parentType) {
-    newInput.condition = {
-      cond: 'eq',
-      value: defaultCondValue(parentType)
-    }
+    newInput.condition = newCondition(parentType)
   }
   return inputs.concat(newInput)
 }
 
 export function changeInput (inputs, index, key, value) {
   return inputs.map((input, index2) => {
-    // no changes
+    // not the input we are looking for, so no changes
     if (index !== index2) {
       return input
     }
-    // found our input
+
+    let change = {[key]: value}
+    // type affects all subInputs' conditions, so reset all of them
+    if (key === 'type') {
+      let resetCondition = newCondition(value)
+      change.subInputs = input.subInputs.map((subInput) => {
+        return {
+          ...subInput,
+          condition: resetCondition
+        }
+      })
+    }
+
     return {
       ...input,
-      ...{[key]: value}
+      ...change
     }
   })
 }
