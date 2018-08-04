@@ -2,6 +2,10 @@
   margin: 20px;
 }
 
+.tab {
+  margin-top: 20px;
+}
+
 .subInput {
   margin-left: 30px;
   width: 82vw; /* barely fits both buttons on 320px screens */

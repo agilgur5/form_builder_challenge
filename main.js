@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { Button, Glyphicon, Well, Form, FormGroup, ControlLabel,
+import { Tabs, Tab, Button, Glyphicon, Well, Form, FormGroup, ControlLabel,
   FormControl, Col } from 'react-bootstrap'
 
 import { addInput, changeInput, deleteInput } from './actions.js'
@@ -16,14 +16,23 @@ class App extends React.Component {
   render = () => {
     let {inputs} = this.state
     return <div className={styles.root}>
-      {inputs.map((input, index) =>
-        <InputComponent key={input.id} input={input}
-          deleteSelf={this._deleteInput(index)}
-          changeSelf={this._changeInput(index)} />
-      )}
-      <Button bsStyle='success' onClick={this._addInput}>
-        <Glyphicon glyph='plus' /> Add Input
-      </Button>
+      <Tabs id='mainTabs'>
+        <Tab eventKey={1} title='Create' className={styles.tab}>
+          {inputs.map((input, index) =>
+            <InputComponent key={input.id} input={input}
+              deleteSelf={this._deleteInput(index)}
+              changeSelf={this._changeInput(index)} />
+          )}
+          <Button bsStyle='success' onClick={this._addInput}>
+            <Glyphicon glyph='plus' /> Add Input
+          </Button>
+        </Tab>
+        <Tab eventKey={2} title='Preview' className={styles.tab} />
+        <Tab eventKey={3} title='Export' className={styles.tab} >
+          <FormControl componentClass='textarea' readOnly
+            value={JSON.stringify({inputs})} />
+        </Tab>
+      </Tabs>
     </div>
   }
 
