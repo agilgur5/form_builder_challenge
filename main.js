@@ -1,6 +1,8 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 
+import styles from './main.cssm'
+
 class App extends React.Component {
   state = {
     inputs: []
@@ -53,7 +55,7 @@ class InputComponent extends React.Component {
     let {input, deleteSelf} = this.props
     let {condition, question, type, subInputs} = input
 
-    return <div>
+    return <div className={styles.subInput}>
       {condition
         ? <div>Condition: <input type='radio' value={condition} /></div>
         : null}
