@@ -6,6 +6,7 @@
   margin-left: 30px;
   width: 82vw; /* barely fits both buttons on 320px screens */
   max-width: 400px;
+  border-left: 1px dashed #ddd; /* faintly show left indent / margin */
 }
 
 .addSubInput {
