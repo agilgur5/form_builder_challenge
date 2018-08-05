@@ -47,7 +47,7 @@ export default class CreateInput extends React.PureComponent {
   }
 
   render = () => {
-    let {input, parentType, deleteSelf} = this.props
+    let {input, parentType} = this.props
     let {condition, question, type, subInputs} = input
 
     return <div className={styles.input}>
@@ -75,7 +75,7 @@ export default class CreateInput extends React.PureComponent {
             </Col>
           </FormGroup>
 
-          <Button onClick={deleteSelf}>
+          <Button onClick={this._deleteSelf}>
             <Glyphicon glyph='minus' /> Delete
           </Button>
           <Button className={styles.addSubInput} bsStyle='success'
@@ -114,6 +114,15 @@ export default class CreateInput extends React.PureComponent {
   }
 
   // self changes
+  _deleteSelf = () => {
+    let length = this.props.input.subInputs.length
+    const confirmation = 'Are you sure you want to delete this Input? Doing ' +
+      'so will delete all of its Sub-Inputs as well'
+    // only proceed if user confirms and only ask if there are subInputs
+    if (length > 0 && !window.confirm(confirmation)) { return }
+
+    this.props.deleteSelf()
+  }
   _changeQuestion = (ev) => {
     let val = ev.target.value // store outside of synthetic ev
     this.props.changeSelf('question', val)

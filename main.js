@@ -53,6 +53,14 @@ class App extends React.PureComponent {
   }
 
   _selectKey = (key) => {
+    const confirmation = 'Are you sure you want to switch tabs? You will ' +
+      'lose anything written in the Preview if you switch'
+    // only proceed if user confirms and only ask if switching out of Preview
+    if (this.state.activeKey === 2 && key !== 2 &&
+      !window.confirm(confirmation)) {
+      return
+    }
+
     this.setState({activeKey: key})
   }
 
