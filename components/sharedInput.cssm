@@ -1,4 +1,4 @@
-.createInput {
+.input {
   width: 82vw; /* barely fits both buttons on 320px screens */
   max-width: 400px;
 }

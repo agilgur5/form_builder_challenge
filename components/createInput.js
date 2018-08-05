@@ -4,7 +4,7 @@ import { Button, Glyphicon, Well, Form, FormGroup, ControlLabel, FormControl,
 
 import { addInput, changeInput, deleteInput } from '../actions.js'
 
-import styles from './createInput.cssm'
+import styles from './sharedInput.cssm'
 
 export default class CreateInput extends React.Component {
   renderConditionValue = (condition, parentType) => {
@@ -48,7 +48,7 @@ export default class CreateInput extends React.Component {
     let {input, parentType, deleteSelf} = this.props
     let {condition, question, type, subInputs} = input
 
-    return <div className={styles.createInput}>
+    return <div className={styles.input}>
       <Well>
         <Form horizontal>
           {condition
