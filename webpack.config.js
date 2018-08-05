@@ -21,14 +21,6 @@ module.exports = {
         loader: 'babel-loader'
       },
       {
-        test: /\.pcss$/,
-        loader: 'style-loader!css-loader!postcss-loader'
-      },
-      {
-        test: /\.pcssm$/,
-        loader: 'style-loader!css-loader?modules&importLoaders=1!postcss-loader'
-      },
-      {
         test: /\.css$/,
         loader: 'style-loader!css-loader'
       },
