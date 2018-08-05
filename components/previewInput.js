@@ -18,10 +18,10 @@ export default class PreviewInput extends React.PureComponent {
 
     switch (type) {
       case 'text':
-        return <FormControl type='text' value={value}
+        return <FormControl type='text' autoFocus value={value}
           onChange={this._changeValue} />
       case 'number':
-        return <FormControl type='number' value={value}
+        return <FormControl type='number' autoFocus value={value}
           onChange={this._changeValue} />
       case 'yes-no':
         return <div>

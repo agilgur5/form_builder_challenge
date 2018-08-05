@@ -12,10 +12,10 @@ export default class CreateInput extends React.PureComponent {
   renderConditionValue = (condition, parentType) => {
     switch (parentType) {
       case 'text':
-        return <FormControl type='text' value={condition.value}
+        return <FormControl type='text' autoFocus value={condition.value}
           onChange={this._changeCondValue} />
       case 'number':
-        return <FormControl type='number' value={condition.value}
+        return <FormControl type='number' autoFocus value={condition.value}
           onChange={this._changeCondValue} />
       case 'yes-no':
         return <FormControl componentClass='select' value={condition.value}
@@ -60,7 +60,8 @@ export default class CreateInput extends React.PureComponent {
             <Col sm={3} componentClass={ControlLabel}>Question</Col>
             <Col sm={9}>
               <FormControl type='text' value={question}
-                onChange={this._changeQuestion} />
+                onChange={this._changeQuestion}
+                autoFocus={!condition || parentType === 'yes-no'} />
             </Col>
           </FormGroup>
           <FormGroup>
