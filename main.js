@@ -7,13 +7,16 @@ import PreviewInput from './components/previewInput.js'
 import FadeTransitionGroup from './components/fadeTransitionGroup.js'
 
 import { addInput, changeInput, deleteInput } from './actions.js'
+import { initLocalStorage, getLocalInputs,
+  setLocalInputs } from './utils/localStorage.js'
 
 import 'bootstrap-css-only'
 import styles from './main.cssm'
 
+initLocalStorage()
 class App extends React.PureComponent {
   state = {
-    inputs: [],
+    inputs: getLocalInputs().inputs,
     activeKey: 1
   }
 
@@ -65,15 +68,23 @@ class App extends React.PureComponent {
   }
 
   _addInput = () => {
-    this.setState((state) => ({inputs: addInput(state.inputs)}))
+    this.setState((state) => ({inputs:
+      addInput(state.inputs)
+    }), this._saveInputs)
   }
   _changeInput = (index) => (key, value) => {
     this.setState((state) => ({inputs:
       changeInput(state.inputs, index, key, value)
-    }))
+    }), this._saveInputs)
   }
   _deleteInput = (index) => () => {
-    this.setState((state) => ({inputs: deleteInput(state.inputs, index)}))
+    this.setState((state) => ({inputs:
+      deleteInput(state.inputs, index)
+    }), this._saveInputs)
+  }
+  // store changes to localStorage after every change
+  _saveInputs = () => {
+    setLocalInputs({inputs: this.state.inputs})
   }
 }
 
