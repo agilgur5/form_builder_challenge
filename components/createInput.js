@@ -8,7 +8,7 @@ import { addInput, changeInput, deleteInput } from '../actions.js'
 
 import styles from './sharedInput.cssm'
 
-export default class CreateInput extends React.Component {
+export default class CreateInput extends React.PureComponent {
   renderConditionValue = (condition, parentType) => {
     switch (parentType) {
       case 'text':

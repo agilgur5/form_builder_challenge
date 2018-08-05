@@ -5,7 +5,7 @@ import FadeTransitionGroup from './fadeTransitionGroup.js'
 
 import styles from './sharedInput.cssm'
 
-export default class PreviewInput extends React.Component {
+export default class PreviewInput extends React.PureComponent {
   state = {
     // NOTE: null and undefined don't work as props to <input>, so
     // using '' instead, but this will match when equals is blank  ¯\_(ツ)_/¯

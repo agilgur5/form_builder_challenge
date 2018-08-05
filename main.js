@@ -11,7 +11,7 @@ import { addInput, changeInput, deleteInput } from './actions.js'
 import 'bootstrap-css-only'
 import styles from './main.cssm'
 
-class App extends React.Component {
+class App extends React.PureComponent {
   state = {
     inputs: [],
     activeKey: 1
