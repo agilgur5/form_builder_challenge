@@ -4,7 +4,17 @@
 }
 
 .input .input {
-  padding-left: 30px; /* only indent when nested */
+  margin-left: 30px; /* only indent when nested */
+  position: relative; /* needed for pseudo-element below */
+}
+/* hack to get a border on the margin instead of the padding
+   padding decreases the width while the margin doesn't */
+.input .input::before {
+  content: '';
+  position: absolute;
+  left: -30px; /* same as margin, but negative */
+  top: 0px; /* height of the element */
+  bottom: 0px;
   border-left: 1px dashed #ddd; /* faintly show left indent / margin */
 }
 
