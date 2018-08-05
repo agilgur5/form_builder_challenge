@@ -2,6 +2,8 @@ import React from 'react'
 import { Button, Glyphicon, Well, Form, FormGroup, ControlLabel, FormControl,
   Col } from 'react-bootstrap'
 
+import FadeTransitionGroup from './fadeTransitionGroup.js'
+
 import { addInput, changeInput, deleteInput } from '../actions.js'
 
 import styles from './sharedInput.cssm'
@@ -83,13 +85,13 @@ export default class CreateInput extends React.Component {
         </Form>
       </Well>
 
-      <div className={subInputs.length > 0 ? styles.subInputList : null}>
+      <FadeTransitionGroup>
         {subInputs.map((subInput, index) =>
           <CreateInput key={subInput.id} input={subInput} parentType={type}
             deleteSelf={this._deleteSubInput(index)}
             changeSelf={this._changeSubInput(index)} />
         )}
-      </div>
+      </FadeTransitionGroup>
     </div>
   }
 

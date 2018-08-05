@@ -1,6 +1,8 @@
 import React from 'react'
 import { FormGroup, ControlLabel, FormControl, Radio } from 'react-bootstrap'
 
+import FadeTransitionGroup from './fadeTransitionGroup.js'
+
 import styles from './sharedInput.cssm'
 
 export default class PreviewInput extends React.Component {
@@ -58,11 +60,11 @@ export default class PreviewInput extends React.Component {
         {this.renderType(type)}
       </FormGroup>
 
-      <div className={subInputs.length > 0 ? styles.subInputList : null}>
+      <FadeTransitionGroup>
         {subInputs.filter(this._filterSubInput).map((subInput) =>
           <PreviewInput key={subInput.id} input={subInput} />
         )}
-      </div>
+      </FadeTransitionGroup>
     </div>
   }
 
