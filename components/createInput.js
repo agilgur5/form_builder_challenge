@@ -25,8 +25,8 @@ export default class CreateInput extends React.Component {
   }
   renderCondition = (condition, parentType) => {
     return <FormGroup>
-      <Col sm={2} componentClass={ControlLabel}>Condition</Col>
-      <Col sm={6}>
+      <Col sm={3} componentClass={ControlLabel}>Condition</Col>
+      <Col sm={4}>
         <FormControl componentClass='select' value={condition.cond}
           onChange={this._changeCondCond}>
           <option value='eq'>Equals</option>
@@ -38,7 +38,7 @@ export default class CreateInput extends React.Component {
             : null}
         </FormControl>
       </Col>
-      <Col sm={4}>
+      <Col sm={5}>
         {this.renderConditionValue(condition, parentType)}
       </Col>
     </FormGroup>
@@ -55,15 +55,15 @@ export default class CreateInput extends React.Component {
             ? this.renderCondition(condition, parentType)
             : null}
           <FormGroup>
-            <Col sm={2} componentClass={ControlLabel}>Question</Col>
-            <Col sm={10}>
+            <Col sm={3} componentClass={ControlLabel}>Question</Col>
+            <Col sm={9}>
               <FormControl type='text' value={question}
                 onChange={this._changeQuestion} />
             </Col>
           </FormGroup>
           <FormGroup>
-            <Col sm={2} componentClass={ControlLabel}>Type</Col>
-            <Col sm={10}>
+            <Col sm={3} componentClass={ControlLabel}>Type</Col>
+            <Col sm={9}>
               <FormControl componentClass='select' value={type}
                 onChange={this._changeType}>
                 <option value='text'>Text</option>
