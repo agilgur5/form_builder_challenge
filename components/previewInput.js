@@ -42,10 +42,10 @@ export default class PreviewInput extends React.Component {
     switch (condition.cond) {
       case 'eq':
         return value === condition.value
-      case 'geq':
-        return value >= condition.value
-      case 'leq':
-        return value <= condition.value
+      case 'gt':
+        return value > condition.value
+      case 'lt':
+        return value < condition.value
     }
   }
 

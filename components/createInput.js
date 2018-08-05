@@ -32,8 +32,8 @@ export default class CreateInput extends React.Component {
           <option value='eq'>Equals</option>
           {parentType === 'number'
             ? <React.Fragment>
-              <option value='geq'>Greater than</option>
-              <option value='leq'>Less than</option>
+              <option value='gt'>Greater than</option>
+              <option value='lt'>Less than</option>
             </React.Fragment>
             : null}
         </FormControl>
